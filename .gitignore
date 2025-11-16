@@ -8,3 +8,5 @@ cmake_install.cmake
 *.dir
 CMakeFiles
 build
+src/header/sort.hpp.gch
+libs
