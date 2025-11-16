@@ -8,6 +8,10 @@ Sorting::Sorting(vector<int> &vec) {
     this->unsorted_array = vec;
 }
 
+void Sorting::set_unsorted_array(vector<int> vec) {
+    this->unsorted_array = vec;
+}
+
 void Sorting::check_sortedness() {
     if (unsorted_array.size() != sorted_array.size()) {
         cout << "Sorted array has missing elements" << "\n";

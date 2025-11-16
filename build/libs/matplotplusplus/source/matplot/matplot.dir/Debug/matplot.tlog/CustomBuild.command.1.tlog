@@ -1,0 +1,10 @@
+^C:\USERS\SANJAY\DESKTOP\CODDLE.CONFESS\PROJECTS\IDK BROOOOOOOO\LIBS\MATPLOTPLUSPLUS\SOURCE\MATPLOT\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/Sanjay/Desktop/Coddle.confess/Projects/IDK BROOOOOOOO" "-BC:/Users/Sanjay/Desktop/Coddle.confess/Projects/IDK BROOOOOOOO/build" --check-stamp-file "C:/Users/Sanjay/Desktop/Coddle.confess/Projects/IDK BROOOOOOOO/build/libs/matplotplusplus/source/matplot/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

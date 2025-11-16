@@ -8,33 +8,45 @@
 
 using namespace std;
 
-typedef unordered_map<string, unordered_map<int, int>> unnamed;
+typedef string SortingAlgorithm;
+typedef int Inputs;
+typedef int TimeToSort;
+typedef unordered_map<SortingAlgorithm, unordered_map<Inputs, TimeToSort>> Record;
 
-int main() {
+vector<Inputs> number_of_inputs = {
+    1000,
+    10000,
+    100000,
+    500000
+};
 
-    int n;
-    cin >> n;
+random_device rd;
 
-    vector<int> ua;
-    random_device rd;
-
+vector<int> get_random_inputs(Inputs n) {
+    vector<int> v;
+    
     for (int i = 0; i < n; i ++) {
-        ua.push_back(rd());
+        v.push_back(rd());
     }
 
-    Sorting sd = Sorting(ua);
-    cout << "Unsorted array\n";
-    // sd.print_unsorted();
-    auto start = chrono::high_resolution_clock::now();  
-    sd.bubble_sort();
-    auto stop = chrono::high_resolution_clock::now();
-    cout << "Sorted array\n";
-    // sd.print_sorted();
-    // sd.check_sortedness();
+    return v;
+}
 
-    auto duration = chrono::duration_cast<chrono::minutes>(stop - start);
+int main() {
+    Record record;
+    chrono::steady_clock::time_point start, stop;
+    vector<int> storage;
+    Sorting SA(storage);
 
-    cout << "\nTime taken to do bubble sort for " << n << " elements is " << duration.count();
+    for (int input: number_of_inputs) {
+        storage = get_random_inputs(input);
+        SA.set_unsorted_array(storage);
+        start = chrono::high_resolution_clock::now();
+        SA.bubble_sort();
+        stop = chrono::high_resolution_clock::now();
+        chrono::duration time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
+        cout << "Time Taken to sort an array of size " << input << " using bubble sort is " << time_taken.count() << " milliseconds\n";
+    }
 
     return 0;
 }

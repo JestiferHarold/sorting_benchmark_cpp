@@ -9,6 +9,7 @@ class Sorting {
 
     public:
         Sorting(std::vector<int> &vec);
+        void set_unsorted_array(std::vector<int> vec);
         void check_sortedness();
         void print_unsorted();
         void print_sorted();
