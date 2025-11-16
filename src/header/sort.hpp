@@ -2,15 +2,22 @@
 
 #include <vector>
 
+typedef int NumberOfSwaps;
+typedef int NumberOfComparisons;
+
 class Sorting {
     private:
         std::vector<int> unsorted_array;
         std::vector<int> sorted_array;
+        NumberOfSwaps swaps;
+        NumberOfComparisons comparisons;
 
     public:
         Sorting(std::vector<int> &vec);
         void set_unsorted_array(std::vector<int> vec);
-        void check_sortedness();
+        NumberOfComparisons get_comparisons();
+        NumberOfSwaps get_swaps();
+        bool check_sortedness();
         void print_unsorted();
         void print_sorted();
         void bubble_sort();

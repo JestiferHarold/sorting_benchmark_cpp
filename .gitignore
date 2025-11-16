@@ -12,3 +12,6 @@ CMakeFiles
 src/header/sort.hpp.gch
 libs
 ./.vscode
+.vscode
+matplotplusplus
+./build
