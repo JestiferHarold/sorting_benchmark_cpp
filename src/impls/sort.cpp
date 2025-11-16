@@ -45,25 +45,36 @@ void Sorting::print_unsorted() {
 
 void Sorting::bubble_sort() {
     vector<int> array = unsorted_array;
-    int min;
     bool swapped;
-    for (int i = 0; i < array.size(); i ++) {
-        min = i;
+
+    for (int i = 0; i < array.size() - 1; i ++) {
         swapped = false;
-        for (int j = i; j < array.size(); j ++) {
-            if (array[min] > array[j]) {
-                min = j;
+        for (int j = 0; j < array.size() - i - 1; j ++) {
+            if (array[j + 1] < array[j]){
+                swap(array[j + 1], array[j]);
                 swapped = true;
             }
         }
 
-        if (!swapped) {
-            break;
-        }
-        
-        swap(array[min], array[i]);
+        if (!swapped) break;
     }
 
     sorted_array = array;
 }
 
+void Sorting::selection_sort() {
+    vector<int> array = unsorted_array;
+    int min;
+    for (int i = 0; i < array.size(); i ++) {
+        min = i;
+        for (int j = i; j < array.size(); j ++) {
+            if (array[min] > array[j]) {
+                min = j;
+            }
+        }
+
+        swap(array[min], array[i]);
+    }
+
+    sorted_array = array;
+}
