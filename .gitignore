@@ -7,7 +7,8 @@ main.cpp
 cmake_install.cmake
 *.dir
 CMakeFiles
-build
+./build/*
+/build/
 src/header/sort.hpp.gch
 libs
-.vscode
+./.vscode

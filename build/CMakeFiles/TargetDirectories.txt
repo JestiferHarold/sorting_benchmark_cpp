@@ -1,3 +1,0 @@
-C:/Users/Sanjay/Desktop/Coddle.confess/Projects/IDK BROOOOOOOO/build/CMakeFiles/test.dir
-C:/Users/Sanjay/Desktop/Coddle.confess/Projects/IDK BROOOOOOOO/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Sanjay/Desktop/Coddle.confess/Projects/IDK BROOOOOOOO/build/CMakeFiles/ZERO_CHECK.dir
