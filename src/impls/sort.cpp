@@ -42,3 +42,28 @@ void Sorting::print_unsorted() {
         cout << a << "\t";
     }
 }
+
+void Sorting::bubble_sort() {
+    vector<int> array = unsorted_array;
+    int min;
+    bool swapped;
+    for (int i = 0; i < array.size(); i ++) {
+        min = i;
+        swapped = false;
+        for (int j = i; j < array.size(); j ++) {
+            if (array[min] > array[j]) {
+                min = j;
+                swapped = true;
+            }
+        }
+
+        if (!swapped) {
+            break;
+        }
+        
+        swap(array[min], array[i]);
+    }
+
+    sorted_array = array;
+}
+
