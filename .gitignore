@@ -1,1 +1,10 @@
 *.exe
+*.vcxproj
+*.filters
+CMakeCache.txt
+*.sln
+main.cpp
+cmake_install.cmake
+*.dir
+CMakeFiles
+build
