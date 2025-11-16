@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <string>
 #include <chrono>
+#include <fstream>
 #include "src/header/sort.hpp"
 
 using namespace std;
@@ -22,11 +23,11 @@ vector<Inputs> number_of_inputs = {
 };
 
 vector<SortingAlgorithm> algos = {
-    "Bubble sort",
-    "Selection sort",
-    "Insertion sort",
-    "Merge sort",
-    "Quick sort"
+    "BubbleSort",
+    "SelectionSort",
+    "InsertionSort",
+    // "MergeSort",
+    // "Quicksort"
 };
 
 random_device rd;
@@ -59,9 +60,9 @@ int main() {
 
         cout << "Time Taken to sort an array of size " << input << " using bubble sort is " << time_taken.count() << " milliseconds"  << " with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
         
-        record["BubbleSort"][input]["inputs"] = (SA.check_sortedness() ? time_taken.count() : -999);
-        record["BubbleSort"][input]["swaps"] = SA.get_swaps();
-        record["BubbleSort"][input]["comparisons"] = SA.get_comparisons();
+        record[algos[0]][input]["inputs"] = (SA.check_sortedness() ? time_taken.count() : -999);
+        record[algos[0]][input]["swaps"] = SA.get_swaps();
+        record[algos[0]][input]["comparisons"] = SA.get_comparisons();
 
         start = chrono::high_resolution_clock::now();
         SA.selection_sort();
@@ -71,9 +72,9 @@ int main() {
 
         cout << "Time taken to sort an array of size " << input << " using selection sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
         
-        record["SelectionSort"][input]["inputs"] = SA.check_sortedness() ? time_taken.count() : -999;
-        record["SelectionSort"][input]["swaps"] = SA.get_swaps();
-        record["SelectionSort"][input]["comparisons"] = SA.get_comparisons();
+        record[algos[1]][input]["inputs"] = SA.check_sortedness() ? time_taken.count() : -999;
+        record[algos[1]][input]["swaps"] = SA.get_swaps();
+        record[algos[1]][input]["comparisons"] = SA.get_comparisons();
 
         start = chrono::high_resolution_clock::now();
         SA.insertion_sort();
@@ -83,11 +84,32 @@ int main() {
 
         cout << "Time taken to sort an array of size " << input << " using insertion sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
 
-        record["InsertionSort"][input]["inputs"] = SA.check_sortedness() ? time_taken.count() : -999;
-        record["InsertionSort"][input]["swaps"] = SA.get_swaps();
-        record["InsertionSort"][input]["comparisons"] = SA.get_comparisons();
+        record[algos[2]][input]["inputs"] = SA.check_sortedness() ? time_taken.count() : -999;
+        record[algos[2]][input]["swaps"] = SA.get_swaps();
+        record[algos[2]][input]["comparisons"] = SA.get_comparisons();
         cout << "\n";
     }
+
+    fstream fp;
+    fp.open("benchmarks.csv", fstream::out);
+
+    fp  << "Sorting algorithm" << ", "
+        << "Number of inputs" << ", "
+        << "Time Taken to sort Milliseconds" << ", "
+        << "Number of Swaps Taken Place" << ", "
+        << "Number of Comparisons Taken Place" << "\n";
+
+    for (string algorithm: algos) {
+        for (int input: number_of_inputs) {
+            fp  << algorithm << ", "
+                << input << ", "
+                << record[algorithm][input]["inputs"] << ", "
+                << record[algorithm][input]["swaps"] << ", "
+                << record[algorithm][input]["comparisons"] << "\n";
+        }
+    }
+
+    fp.close();
 
     return 0;
 }
