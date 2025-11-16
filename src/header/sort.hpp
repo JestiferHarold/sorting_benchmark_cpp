@@ -2,8 +2,8 @@
 
 #include <vector>
 
-typedef int NumberOfSwaps;
-typedef int NumberOfComparisons;
+typedef long long NumberOfSwaps;
+typedef long long NumberOfComparisons;
 
 class Sorting {
     private:
@@ -11,6 +11,10 @@ class Sorting {
         std::vector<int> sorted_array;
         NumberOfSwaps swaps;
         NumberOfComparisons comparisons;
+        void merge_helper(std::vector<int>& array, int left, int mid, int right);
+        void merge(std::vector<int>& array, int left, int right);
+        int partition(std::vector<int>& array, int low, int high);
+        void quick_helper(std::vector<int>& array, int low, int high);
 
     public:
         Sorting(std::vector<int> &vec);

@@ -12,10 +12,13 @@ using namespace std;
 typedef string SortingAlgorithm;
 typedef int Inputs;
 typedef int TimeToSort;
-typedef unordered_map<SortingAlgorithm, unordered_map<int, unordered_map<string, int>>> Record; /* vector<TimeToSort, swaps, comparisons> */
+typedef unordered_map<SortingAlgorithm, unordered_map<int, unordered_map<string, long long>>> Record; 
 
 vector<Inputs> number_of_inputs = {
+    100,
+    500,
     1000,
+    5000,
     10000,
     50000,
     100000,
@@ -26,8 +29,8 @@ vector<SortingAlgorithm> algos = {
     "BubbleSort",
     "SelectionSort",
     "InsertionSort",
-    // "MergeSort",
-    // "Quicksort"
+    "MergeSort",
+    "Quicksort"
 };
 
 random_device rd;
@@ -87,7 +90,23 @@ int main() {
         record[algos[2]][input]["inputs"] = SA.check_sortedness() ? time_taken.count() : -999;
         record[algos[2]][input]["swaps"] = SA.get_swaps();
         record[algos[2]][input]["comparisons"] = SA.get_comparisons();
-        cout << "\n";
+
+        start = chrono::high_resolution_clock::now();
+        SA.merge_sort();
+        stop = chrono::high_resolution_clock::now();
+
+        time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
+
+        cout << "Time taken to sort an array of size " << input << " using merge sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
+
+        start = chrono::high_resolution_clock::now();
+        SA.quick_sort();
+        stop = chrono::high_resolution_clock::now();
+        
+        time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
+
+        cout << "Time taken to sort an array of size " << input << " using quick sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
+        cout << "\n"; 
     }
 
     fstream fp;

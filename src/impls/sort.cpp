@@ -57,8 +57,8 @@ void Sorting::print_unsorted() {
 void Sorting::bubble_sort() {
     vector<int> array = unsorted_array;
     bool swapped;
-    int swaps = 0;
-    int comparisons = 0;
+    long long swaps = 0;
+    long long comparisons = 0;
 
     for (int i = 0; i < array.size() - 1; i ++) {
         swapped = false;
@@ -83,8 +83,8 @@ void Sorting::bubble_sort() {
 void Sorting::selection_sort() {
     vector<int> array = unsorted_array;
     int min;
-    int swaps = 0;
-    int comparisons = 0;
+    long long swaps = 0;
+    long long comparisons = 0;
 
     for (int i = 0; i < array.size(); i ++) {
         min = i;
@@ -107,8 +107,8 @@ void Sorting::selection_sort() {
 void Sorting::insertion_sort() {
     vector<int> array = unsorted_array;
     int j;
-    int swaps = 0;
-    int comparisons = 0;
+    long long swaps = 0;
+    long long comparisons = 0;
 
     for (int i = 1; i < array.size(); i ++) {
         j = i;
@@ -123,4 +123,93 @@ void Sorting::insertion_sort() {
     }
 
     sorted_array = array;
+    this->swaps = swaps;
+    this->comparisons = comparisons;
+}
+
+void Sorting::merge_helper(vector<int>& array, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    vector<int> L(n1), R(n2);
+
+    for (int i = 0; i < n1; i ++) {
+        L[i] = array[left + 1];
+    }
+
+    for (int j = 0; j < n2; j ++) {
+        R[j] = array[mid + 1 + j];
+    }
+
+    int i = 0;
+    int j = 0;
+    int k = left;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            array[k] = L[i];
+            i ++;
+        } else {
+            array[k] = R[j];
+            j ++;
+        }
+        k ++;
+    }
+
+    while (i < n1) {
+        array[k] = L[i];
+        i ++;
+        k ++;
+    }
+
+    while (j < n2) {
+        array[k] = R[j];
+        j ++;
+        k ++;
+    }
+}
+
+void Sorting::merge(vector<int>& array, int left, int right) {
+    if (left >= right) {
+        return;
+    }
+
+    int mid = left + (right - left) / 2;
+    merge(array, left, mid);
+    merge(array, mid + 1, right);
+    merge_helper(array, left, mid, right);
+}
+
+void Sorting::merge_sort() {
+    vector<int> array = this->unsorted_array;
+    merge(array, 0, array.size() - 1);
+    this->sorted_array = array;
+}
+
+int Sorting::partition(vector<int>& array, int low, int high) {
+    int pivot = array[high];
+    int i = low - 1;
+    for (int j = low; j <= high - 1; j ++) {
+        if (array[j] < pivot) {
+            i ++;
+            swap(array[i], array[j]);
+        }
+    }
+
+    swap(array[i + 1], array[high]);
+    return i + 1;
+}
+
+void Sorting::quick_helper(vector<int>& array, int low, int high) {
+    if (low < high) {
+        int pi = partition(array, low, high);
+        quick_helper(array, low, pi - 1);
+        quick_helper(array, pi + 1, high);
+    }
+}
+
+void Sorting::quick_sort() {
+    vector<int> array = this->unsorted_array;
+    quick_helper(array, 0, array.size() - 1);
+    this->sorted_array = array;
 }
