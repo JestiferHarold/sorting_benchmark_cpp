@@ -10,3 +10,4 @@ CMakeFiles
 build
 src/header/sort.hpp.gch
 libs
+.vscode
