@@ -78,3 +78,20 @@ void Sorting::selection_sort() {
 
     sorted_array = array;
 }
+
+void Sorting::insertion_sort() {
+    vector<int> array = unsorted_array;
+    int j;
+
+    for (int i = 1; i < array.size(); i ++) {
+        j = i;
+        
+        while (j > 0 && array[j] < array[j - 1]) {
+            swap(array[j], array[j - 1]);
+            j --;
+        }
+
+    }
+
+    sorted_array = array;
+}
