@@ -110,20 +110,21 @@ void Sorting::selection_sort() {
 
 void Sorting::insertion_sort() {
     vector<int> array = unsorted_array;
-    int j;
+    int j, key;
     long long swaps = 0;
     long long comparisons = 0;
 
     for (int i = 1; i < array.size(); i ++) {
-        j = i;
+        j = i - 1; 
+        int key = array[i];
         
-        while (j > 0 && array[j] < array[j - 1]) {
-            swaps++;
-            comparisons++;
-            swap(array[j], array[j - 1]);
-            j --;
+        while (j >= 0 && array[j] > key) {
+            array[j + 1]  = array[j];
+            j --, comparisons ++, swaps ++;
         }
 
+        array[j + 1] = key;
+        swaps ++;
     }
 
     sorted_array = array;
@@ -138,7 +139,7 @@ void Sorting::merge_helper(vector<int>& array, int left, int mid, int right) {
     vector<int> L(n1), R(n2);
 
     for (int i = 0; i < n1; i ++) {
-        L[i] = array[left + 1];
+        L[i] = array[left + i];
     }
 
     for (int j = 0; j < n2; j ++) {
@@ -150,26 +151,25 @@ void Sorting::merge_helper(vector<int>& array, int left, int mid, int right) {
     int k = left;
 
     while (i < n1 && j < n2) {
+        this->comparisons ++;
         if (L[i] <= R[j]) {
             array[k] = L[i];
-            i ++;
+            i ++, this->swaps ++;
         } else {
             array[k] = R[j];
-            j ++;
+            j ++, this->swaps ++;
         }
         k ++;
     }
 
     while (i < n1) {
         array[k] = L[i];
-        i ++;
-        k ++;
+        i ++, k ++, this->swaps ++;
     }
 
     while (j < n2) {
         array[k] = R[j];
-        j ++;
-        k ++;
+        j ++, k ++, this->swaps ++;
     }
 }
 
@@ -186,6 +186,7 @@ void Sorting::merge(vector<int>& array, int left, int right) {
 
 void Sorting::merge_sort() {
     vector<int> array = this->unsorted_array;
+    this->swaps = this->comparisons = 0;
     merge(array, 0, array.size() - 1);
     this->sorted_array = array;
 }
@@ -193,14 +194,18 @@ void Sorting::merge_sort() {
 int Sorting::partition(vector<int>& array, int low, int high) {
     int pivot = array[high];
     int i = low - 1;
+    long long comparisons;
     for (int j = low; j <= high - 1; j ++) {
+        this->comparisons ++;
         if (array[j] < pivot) {
             i ++;
             swap(array[i], array[j]);
+            this->swaps ++;
         }
     }
 
     swap(array[i + 1], array[high]);
+    this->swaps ++;
     return i + 1;
 }
 
@@ -214,12 +219,15 @@ void Sorting::quick_helper(vector<int>& array, int low, int high) {
 
 void Sorting::quick_sort() {
     vector<int> array = this->unsorted_array;
+    this->comparisons = this->swaps = 0;
     quick_helper(array, 0, array.size() - 1);
     this->sorted_array = array;
 }
 
 void Sorting::reverse_sorted_vector() {
-    for (int i = 0, j = this->sorted_array.size() - 1; i < this->sorted_array.size() / 2; i ++, j --) {
-        
+    for (int i = 0, j = this->sorted_array.size() - 1, temp; i < j; i ++, j --) {
+        temp = this->sorted_array[i];
+        this->sorted_array[i] = this->sorted_array[j];
+        this->sorted_array[j] = temp;
     }
 }

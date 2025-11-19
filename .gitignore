@@ -16,3 +16,5 @@ libs
 matplotplusplus
 ./buildC4244
 .vscode
+venv
+benchmarks.csv
