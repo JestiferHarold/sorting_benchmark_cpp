@@ -25,14 +25,6 @@ vector<Inputs> number_of_inputs = {
     500000
 };
 
-vector<SortingAlgorithm> algos = {
-    "BubbleSort",
-    "SelectionSort",
-    "InsertionSort",
-    "MergeSort",
-    "Quicksort"
-};
-
 random_device rd;
 
 vector<int> get_random_inputs(Inputs n) {
@@ -51,84 +43,106 @@ int main() {
     vector<int> storage;
     Sorting SA(storage);
 
-    for (int input: number_of_inputs) {
-        storage = get_random_inputs(input);
-        SA.set_unsorted_array(storage);
-
-        start = chrono::high_resolution_clock::now();
-        SA.bubble_sort();
-        stop = chrono::high_resolution_clock::now();
-
-        chrono::duration time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
-
-        cout << "Time Taken to sort an array of size " << input << " using bubble sort is " << time_taken.count() << " milliseconds"  << " with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
-        
-        record[algos[0]][input]["inputs"] = (SA.check_sortedness() ? time_taken.count() : -999);
-        record[algos[0]][input]["swaps"] = SA.get_swaps();
-        record[algos[0]][input]["comparisons"] = SA.get_comparisons();
-
-        start = chrono::high_resolution_clock::now();
-        SA.selection_sort();
-        stop = chrono::high_resolution_clock::now();
-
-        time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
-
-        cout << "Time taken to sort an array of size " << input << " using selection sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
-        
-        record[algos[1]][input]["inputs"] = SA.check_sortedness() ? time_taken.count() : -999;
-        record[algos[1]][input]["swaps"] = SA.get_swaps();
-        record[algos[1]][input]["comparisons"] = SA.get_comparisons();
-
-        start = chrono::high_resolution_clock::now();
-        SA.insertion_sort();
-        stop = chrono::high_resolution_clock::now();
-
-        time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
-
-        cout << "Time taken to sort an array of size " << input << " using insertion sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
-
-        record[algos[2]][input]["inputs"] = SA.check_sortedness() ? time_taken.count() : -999;
-        record[algos[2]][input]["swaps"] = SA.get_swaps();
-        record[algos[2]][input]["comparisons"] = SA.get_comparisons();
-
-        start = chrono::high_resolution_clock::now();
-        SA.merge_sort();
-        stop = chrono::high_resolution_clock::now();
-
-        time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
-
-        cout << "Time taken to sort an array of size " << input << " using merge sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
-
-        start = chrono::high_resolution_clock::now();
-        SA.quick_sort();
-        stop = chrono::high_resolution_clock::now();
-        
-        time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
-
-        cout << "Time taken to sort an array of size " << input << " using quick sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
-        cout << "\n"; 
-    }
-
     fstream fp;
     fp.open("benchmarks.csv", fstream::out);
 
-    fp  << "Sorting algorithm" << ", "
-        << "Number of inputs" << ", "
-        << "Time Taken to sort Milliseconds" << ", "
-        << "Number of Swaps Taken Place" << ", "
-        << "Number of Comparisons Taken Place" << "\n";
+    fp  << "Sorting algorithm, "
+        << "Case, "
+        << "Number of inputs, "
+        << "Time Taken to sort Milliseconds, "
+        << "Number of Swaps Taken Place, "
+        << "Number of Comparisons Taken Place\n";
 
-    for (string algorithm: algos) {
-        for (int input: number_of_inputs) {
-            fp  << algorithm << ", "
+    for (int input: number_of_inputs) {
+        storage = get_random_inputs(input);
+        SA.set_unsorted_array(storage);
+        for (const string s: {"average", "worst", "best"}) {
+
+            if (s == "best") {
+                SA.set_unsorted_array(SA.get_sorted_array());
+            } else if (s == "worst") {
+                SA.reverse_sorted_vector();
+            }
+
+            cout << s << " case\n";
+
+            start = chrono::high_resolution_clock::now();
+            SA.bubble_sort();
+            stop = chrono::high_resolution_clock::now();
+
+            chrono::duration time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
+
+            cout << "Time Taken to sort an array of size " << input << " using bubble sort is " << time_taken.count() << " milliseconds"  << " with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
+            
+            fp  << "Bubble Sort, "
+                << s
                 << input << ", "
-                << record[algorithm][input]["inputs"] << ", "
-                << record[algorithm][input]["swaps"] << ", "
-                << record[algorithm][input]["comparisons"] << "\n";
+                << (SA.check_sortedness() ? time_taken.count() : -999) << ", "
+                << SA.get_swaps() << ", "
+                << SA.get_comparisons() << "\n";
+
+            start = chrono::high_resolution_clock::now();
+            SA.selection_sort();
+            stop = chrono::high_resolution_clock::now();
+
+            time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
+
+            cout << "Time taken to sort an array of size " << input << " using selection sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
+            
+            fp  << "Selection Sort, "
+                << s
+                << input << ", "
+                << (SA.check_sortedness() ? time_taken.count() : -999) << ", "
+                << SA.get_swaps() << ", "
+                << SA.get_comparisons() << "\n";
+
+            start = chrono::high_resolution_clock::now();
+            SA.insertion_sort();
+            stop = chrono::high_resolution_clock::now();
+
+            time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
+
+            cout << "Time taken to sort an array of size " << input << " using insertion sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
+
+            fp  << "Insertion Sort, "
+                << s
+                << input << ", "
+                << (SA.check_sortedness() ? time_taken.count() : -999) << ", "
+                << SA.get_swaps() << ", "
+                << SA.get_comparisons() << "\n";
+
+            start = chrono::high_resolution_clock::now();
+            SA.merge_sort();
+            stop = chrono::high_resolution_clock::now();
+
+            time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
+
+            cout << "Time taken to sort an array of size " << input << " using merge sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
+
+            fp  << "Merge Sort, "
+                << s
+                << input << ", "
+                << (SA.check_sortedness() ? time_taken.count() : -999) << ", "
+                << SA.get_swaps() << ", "
+                << SA.get_comparisons() << "\n";
+
+            start = chrono::high_resolution_clock::now();
+            SA.quick_sort();
+            stop = chrono::high_resolution_clock::now();
+            
+            time_taken = chrono::duration_cast<chrono::milliseconds>(stop - start);
+
+            cout << "Time taken to sort an array of size " << input << " using quick sort is " << time_taken.count() << " milliseconds with " << SA.get_comparisons() << " Comparisons and " << SA.get_swaps() << " Swaps\n";
+            cout << "\n"; 
+
+            fp  << "Quick Sort, "
+                << s
+                << input << ", "
+                << (SA.check_sortedness() ? time_taken.count() : -999) << ", "
+                << SA.get_swaps() << ", "
+                << SA.get_comparisons() << "\n";
         }
     }
-
-    fp.close();
 
     return 0;
 }

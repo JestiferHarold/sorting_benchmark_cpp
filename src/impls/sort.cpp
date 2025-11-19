@@ -20,6 +20,10 @@ NumberOfSwaps Sorting::get_swaps() {
     return this->swaps;
 }
 
+vector<int> Sorting::get_sorted_array() {
+    return this->sorted_array;
+}
+
 bool Sorting::check_sortedness() {
     if (unsorted_array.size() != sorted_array.size()) {
         cout << "Sorted array has missing elements" << "\n";
@@ -212,4 +216,10 @@ void Sorting::quick_sort() {
     vector<int> array = this->unsorted_array;
     quick_helper(array, 0, array.size() - 1);
     this->sorted_array = array;
+}
+
+void Sorting::reverse_sorted_vector() {
+    for (int i = 0, j = this->sorted_array.size() - 1; i < this->sorted_array.size() / 2; i ++, j --) {
+        
+    }
 }

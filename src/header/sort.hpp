@@ -21,6 +21,7 @@ class Sorting {
         void set_unsorted_array(std::vector<int> vec);
         NumberOfComparisons get_comparisons();
         NumberOfSwaps get_swaps();
+        std::vector<int> get_sorted_array();
         bool check_sortedness();
         void print_unsorted();
         void print_sorted();
@@ -29,4 +30,5 @@ class Sorting {
         void insertion_sort();
         void merge_sort();
         void quick_sort();
+        void reverse_sorted_vector();
 };
