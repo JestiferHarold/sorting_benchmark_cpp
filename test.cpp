@@ -19,9 +19,9 @@ vector<Inputs> number_of_inputs = {
     1000,
     5000,
     10000,
-    // 50000,
-    // 100000,
-    // 500000
+    50000,
+    100000,
+    500000
 };
 
 random_device rd;
@@ -50,6 +50,7 @@ int main() {
         << "Time Taken to sort Milliseconds,"
         << "Number of Swaps Taken Place,"
         << "Number of Comparisons Taken Place\n";
+
 
     for (int input: number_of_inputs) {
         storage = get_random_inputs(input);
