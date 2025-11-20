@@ -1,4 +1,4 @@
-#pragma once
+#ifndef SORT_HPP
 
 #include <vector>
 
@@ -30,5 +30,6 @@ class Sorting {
         void insertion_sort();
         void merge_sort();
         void quick_sort();
-        void reverse_sorted_vector();
 };
+
+#endif

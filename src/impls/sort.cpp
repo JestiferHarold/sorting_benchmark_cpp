@@ -116,7 +116,7 @@ void Sorting::insertion_sort() {
 
     for (int i = 1; i < array.size(); i ++) {
         j = i - 1; 
-        int key = array[i];
+        key = array[i];
         
         while (j >= 0 && array[j] > key) {
             array[j + 1]  = array[j];
@@ -194,7 +194,6 @@ void Sorting::merge_sort() {
 int Sorting::partition(vector<int>& array, int low, int high) {
     int pivot = array[high];
     int i = low - 1;
-    long long comparisons;
     for (int j = low; j <= high - 1; j ++) {
         this->comparisons ++;
         if (array[j] < pivot) {
@@ -222,12 +221,4 @@ void Sorting::quick_sort() {
     this->comparisons = this->swaps = 0;
     quick_helper(array, 0, array.size() - 1);
     this->sorted_array = array;
-}
-
-void Sorting::reverse_sorted_vector() {
-    for (int i = 0, j = this->sorted_array.size() - 1, temp; i < j; i ++, j --) {
-        temp = this->sorted_array[i];
-        this->sorted_array[i] = this->sorted_array[j];
-        this->sorted_array[j] = temp;
-    }
 }
